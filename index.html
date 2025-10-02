@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>ASDS Asteroid Impact Simulator</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!-- Panel lateral izquierdo -->
+  <div id="sidebar">
+    <div class="logo">
+      <i class="fas fa-meteor"></i>
+      <h1>ASTEROID LAUNCHER</h1>
+    </div>
+    
+    <div class="input-group">
+      <label for="asteroidSelect"><i class="fas fa-asterisk"></i> SELECT ASTEROID</label>
+      
+      <!-- Carrusel de asteroides -->
+      <div class="asteroid-carousel">
+        <div class="asteroid-track" id="asteroidTrack">
+          <!-- Los slides se generan dinámicamente desde el backend -->
+        </div>
+      </div>
+      
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="prevBtn">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <div class="carousel-dots" id="carouselDots">
+          <!-- Los dots se generan dinámicamente -->
+        </div>
+        
+        <button class="carousel-btn" id="nextBtn">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <label><i class="fas fa-sliders-h"></i> CUSTOMIZE PARAMETERS</label>
+      
+      <!-- Barras deslizadoras -->
+      <div class="slider-container">
+        <div class="slider-label">
+          <span>Diameter (m)</span>
+          <span class="slider-value" id="diameterValue">500</span>
+        </div>
+        <input type="range" min="1" max="2000" value="500" class="slider" id="diameterSlider">
+      </div>
+      
+      <div class="slider-container">
+        <div class="slider-label">
+          <span>Speed (km/s)</span>
+          <span class="slider-value" id="speedValue">17</span>
+        </div>
+        <input type="range" min="1" max="100" value="17" class="slider" id="speedSlider">
+      </div>
+      
+      <div class="slider-container">
+        <div class="slider-label">
+          <span>Impact Angle (°)</span>
+          <span class="slider-value" id="angleValue">45</span>
+        </div>
+        <input type="range" min="5" max="90" value="45" class="slider" id="angleSlider">
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <label><i class="fas fa-map-marker-alt"></i> IMPACT LOCATION</label>
+      <p style="font-size: 13px; color: var(--text-light); margin-top: 5px;">Click on the map to set impact point</p>
+    </div>
+    
+    <button id="simulateBtn">
+      <i class="fas fa-play-circle"></i> SIMULATE IMPACT
+    </button>
+  </div>
+
+  <!-- Mapa -->
+  <div id="map"></div>
+
+  <!-- Panel lateral derecho - inicialmente oculto -->
+  <div id="results">
+    <div class="results-header">
+      <h2><i class="fas fa-chart-bar"></i> IMPACT RESULTS</h2>
+      <button class="close-results" id="closeResults">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div id="output">
+      <!-- Aquí se mostrarán los resultados del backend -->
+    </div>
+  </div>
+
+  <!-- Mensaje inicial -->
+  <div id="initialMessage" class="initial-message">
+    <div class="planet-container">
+      <!-- Imagen izquierda -->
+      <img src="./images/Escudo_asds.jpg" alt="Asteroid 1" class="planet-image">
+      
+      <!-- Icono del planeta -->
+      <i class="fas fa-globe-americas planet-icon"></i>
+      
+      <!-- Imagen derecha -->
+      <img src="./images/LOGO_NASA2.png" alt="Asteroid 2" class="planet-image">
+    </div>
+    
+    <h3>Welcome to the ASDS Asteroid Impact Simulator</h3>
+    <p>Select an asteroid from the menu, customize parameters with sliders, click anywhere on the map to set the impact point, and then press "Simulate Impact" to see the potential consequences.</p>
+    <button class="close-message" id="closeMessage">
+      <i class="fas fa-play"></i> GET STARTED
+    </button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/config.js"></script>
+  <script src="./js/carousel.js"></script>
+  <script src="./js/map.js"></script>
+  <script src="./js/simulation.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>

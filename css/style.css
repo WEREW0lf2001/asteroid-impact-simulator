@@ -1,0 +1,646 @@
+:root {
+  --primary-color: #242f31;
+  --primary-dark: #1a2325;
+  --primary-light: #2f3b3d;
+  --accent-color: #ff8f00;
+  --warning-color: #d32f2f;
+  --bg-color: #f8f9fa;
+  --card-bg: #ffffff;
+  --text-color: #333333;
+  --text-light: #666666;
+  --border-color: #e0e0e0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  height: 100vh;
+  background: var(--bg-color);
+  color: var(--text-color);
+  overflow: hidden;
+}
+
+/* Panel izquierdo (menú asteroides) */
+#sidebar {
+  width: 320px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border-right: 1px solid var(--border-color);
+  box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+  z-index: 10;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.logo i {
+  font-size: 24px;
+  color: var(--primary-color);
+  margin-right: 10px;
+}
+
+.logo h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+#sidebar h2 {
+  font-size: 16px;
+  margin: 20px 0 10px;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+/* Estilos para el carrusel de asteroides */
+.asteroid-carousel {
+  position: relative;
+  margin-top: 15px;
+  height: 180px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-color);
+}
+
+.asteroid-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 100%;
+  width: 100%;
+}
+
+.asteroid-slide {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 100%;
+  min-width: 100%;
+}
+
+.asteroid-slide.selected {
+  background: rgba(255, 143, 0, 0.05);
+  border: 2px solid var(--accent-color);
+}
+
+.asteroid-visual {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.asteroid-shape {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #8B7355, #A0522D);
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 8s linear infinite;
+}
+
+/* Diferentes formas y animaciones para cada asteroide */
+.asteroid-image {
+  width: 90px !important;
+  height: 90px !important;
+  object-fit: cover !important;
+  border-radius: 50%;
+  animation: rotate 8s linear infinite;
+  border: 2px solid rgba(255, 143, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  display: block;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  transform: scale(1); /* Forzar escala */
+}
+
+.asteroid-info {
+  text-align: center;
+}
+
+.asteroid-name {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.asteroid-details {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-bottom: 2px;
+}
+
+.asteroid-source {
+  font-size: 11px;
+  color: var(--accent-color);
+  font-weight: 500;
+}
+
+/* Controles del carrusel */
+.carousel-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding: 0 10px;
+}
+
+.carousel-btn {
+  background: var(--primary-color);
+  border: none;
+  color: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 12px;
+}
+
+.carousel-btn:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: scale(1.1);
+}
+
+.carousel-btn:disabled {
+  background: var(--border-color);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+  justify-content: center;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: var(--accent-color);
+  transform: scale(1.2);
+}
+
+.carousel-dot:hover {
+  background: var(--primary-color);
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes pulseRotate {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Estilos para las barras deslizadoras */
+.slider-container {
+  margin-bottom: 20px;
+}
+
+.slider-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.slider-label span {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.slider-value {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border-color);
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  cursor: pointer;
+  border: none;
+}
+
+/* Resto de estilos existentes */
+#asteroidSelect {
+  display: none;
+}
+
+button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  background: var(--primary-color);
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button i {
+  margin-right: 8px;
+}
+
+button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Panel de resultados - inicialmente oculto */
+#results {
+  width: 0;
+  background: var(--card-bg);
+  color: var(--text-color);
+  padding: 0;
+  box-sizing: border-box;
+  overflow-y: auto;
+  transition: all 0.5s ease;
+  opacity: 0;
+  border-left: 1px solid var(--border-color);
+  box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+  z-index: 10;
+}
+
+#results.visible {
+  width: 350px;
+  padding: 20px;
+  opacity: 1;
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.results-header h2 {
+  font-size: 18px;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.close-results {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+  font-size: 18px;
+  width: auto;
+  margin: 0;
+  padding: 5px;
+}
+
+.close-results:hover {
+  background: none;
+  transform: none;
+  box-shadow: none;
+  color: var(--primary-color);
+}
+
+.result-section {
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+}
+
+.result-section:last-child {
+  border-bottom: none;
+}
+
+.result-section h3 {
+  font-size: 15px;
+  margin: 0 0 12px;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+}
+
+.result-section h3 i {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.result-item {
+  margin: 8px 0;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.result-label {
+  font-weight: 500;
+  color: var(--text-light);
+  flex: 1;
+}
+
+.result-value {
+  color: var(--text-color);
+  font-weight: 500;
+  text-align: right;
+  flex: 1;
+}
+
+/* Mapa central */
+#map {
+  flex: 1;
+  height: 100%;
+}
+
+.warning {
+  color: var(--warning-color);
+  font-weight: bold;
+}
+
+.highlight {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+/* Mensaje inicial */
+.initial-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.98);
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  z-index: 1000;
+  max-width: 650px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(5px);
+}
+
+.initial-message i {
+  font-size: 48px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.initial-message h3 {
+  color: var(--primary-color);
+  margin: 10px 0 15px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.initial-message p {
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.close-message {
+  background: var(--primary-color);
+  border: none;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  width: auto;
+  display: inline-block;
+}
+
+.close-message:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Triángulo del icono "play" en amarillo */
+.close-message i.fa-play {
+  color: var(--accent-color) !important;
+}
+
+/* Contenedor para las imágenes */
+.planet-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.planet-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 0 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.planet-icon {
+  font-size: 60px;
+  color: var(--primary-color);
+  margin: 0 15px;
+}
+
+/* Estilos para el popup del marcador */
+.leaflet-popup-content-wrapper {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.leaflet-popup-content {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+}
+
+.impact-marker {
+  background-color: var(--primary-color);
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Indicador de asteroide peligroso */
+.hazard-indicator {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--warning-color);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  #sidebar {
+    width: 300px;
+  }
+  
+  #results.visible {
+    width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+  
+  #sidebar {
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  #map {
+    height: 50vh;
+  }
+  
+  #results.visible {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    max-width: 400px;
+    z-index: 100;
+  }
+  
+  .initial-message {
+    max-width: 90%;
+    padding: 20px;
+  }
+  
+  .planet-image {
+    width: 80px;
+    height: 80px;
+    margin: 0 10px;
+  }
+  
+  .planet-icon {
+    font-size: 50px;
+    margin: 0 10px;
+  }
+
+  .asteroid-visual {
+    width: 60px;
+    height: 60px;
+  }
+
+  .asteroid-shape {
+    width: 40px;
+    height: 40px;
+  }
+}
