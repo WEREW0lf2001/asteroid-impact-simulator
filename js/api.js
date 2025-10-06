@@ -1,15 +1,13 @@
 // Configuración de APIs y endpoints
 const API_CONFIG = {
-    // URL base del backend Django
+    // URL base del backend
     BASE_URL: 'http://127.0.0.1:8000',
     
-    // Endpoints
     ENDPOINTS: {
         ASTEROIDS: '/api/asteroides/',
         IMPACT_SIMULATION: '/api/impacto/'
     },
     
-    // Headers para las peticiones
     HEADERS: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -28,8 +26,8 @@ async function apiRequest(url, options = {}) {
         
         const config = {
             method: 'GET',
-            mode: 'cors', // Important for CORS
-            credentials: 'omit', // or 'same-origin' if you need cookies
+            mode: 'cors',
+            credentials: 'omit',
             headers: {
                 ...API_CONFIG.HEADERS
             },
@@ -47,7 +45,6 @@ async function apiRequest(url, options = {}) {
     } catch (error) {
         console.error('API request failed:', error);
         
-        // Provide more specific error messages for CORS
         if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
             throw new Error('Network error or CORS issue. Check if the backend server is running and CORS is configured.');
         }
@@ -60,7 +57,6 @@ async function apiRequest(url, options = {}) {
 async function getAsteroids(startDate = null, endDate = null) {
     let url = getApiUrl(API_CONFIG.ENDPOINTS.ASTEROIDS);
     
-    // Agregar parámetros de fecha si se proporcionan
     const params = new URLSearchParams();
     if (startDate) params.append('start_date', startDate);
     if (endDate) params.append('end_date', endDate);

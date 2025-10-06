@@ -1,20 +1,16 @@
-// Variables del carrusel
 let currentSlide = 0;
 let selectedAsteroid = '';
 
 // Inicializar carrusel con datos del backend
 async function initCarousel() {
-  // Cargar asteroides del backend
   await loadAsteroidsFromBackend();
   
   const track = document.getElementById('asteroidTrack');
   const dots = document.getElementById('carouselDots');
   
-  // Limpiar contenido existente y OCULTAR los dots
   track.innerHTML = '';
-  dots.style.display = 'none'; // Ocultar los dots
+  dots.style.display = 'none';
   
-  // Verificar que hay asteroides
   if (asteroidData.length === 0) {
     track.innerHTML = '<div class="asteroid-slide"><p>No asteroids available</p></div>';
     return;
@@ -22,13 +18,13 @@ async function initCarousel() {
   
   selectedAsteroid = asteroidData[0].id;
   
-  // Generar slides
+  updateSlidersWithAsteroidData(asteroidData[0]);
+  
   asteroidData.forEach((asteroid, index) => {
     const slide = document.createElement('div');
     slide.className = `asteroid-slide ${index === 0 ? 'selected' : ''}`;
     slide.setAttribute('data-index', index);
     
-    // Añadir indicador de asteroide peligroso
     const hazardIndicator = asteroid.peligroso ? 
       '<div class="hazard-indicator" title="Potentially Hazardous Asteroid"><i class="fas fa-exclamation-triangle"></i></div>' : 
       '';
@@ -47,7 +43,6 @@ async function initCarousel() {
     `;
     track.appendChild(slide);
     
-    // Evento click en slide
     slide.addEventListener('click', () => {
       goToSlide(index);
     });
@@ -56,46 +51,55 @@ async function initCarousel() {
   updateCarousel();
 }
 
-// Navegar a slide específico
-function goToSlide(index) {
-  currentSlide = index;
-  selectedAsteroid = asteroidData[index].id;
-  
-  // Actualizar controles deslizantes con los valores del asteroide seleccionado
-  const asteroid = asteroidData[index];
-  diameter = asteroid.diameter_m;
-  speed = asteroid.speed_km_s;
-  angle = asteroid.angle_deg;
-  
-  document.getElementById('diameterSlider').value = diameter;
-  document.getElementById('speedSlider').value = speed;
-  document.getElementById('angleSlider').value = angle;
-  
-  updateSliderValues();
-  updateCarousel();
-}
-
-// Actualizar carrusel
 function updateCarousel() {
   const track = document.getElementById('asteroidTrack');
   const slides = document.querySelectorAll('.asteroid-slide');
-  
-  // Mover track
+
   if (track) {
     track.style.transform = `translateX(-${currentSlide * 100}%)`;
   }
   
-  // Actualizar slides seleccionados
   slides.forEach((slide, index) => {
     if (slide.classList) {
       slide.classList.toggle('selected', index === currentSlide);
     }
   });
   
-  // Actualizar botones de navegación
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
   
   if (prevBtn) prevBtn.disabled = currentSlide === 0;
   if (nextBtn) nextBtn.disabled = currentSlide === asteroidData.length - 1;
+}
+
+//Actualizar sliders con datos del asteroide
+function updateSlidersWithAsteroidData(asteroid) {
+  console.log('🔄 Updating sliders with asteroid data:', asteroid);
+  
+  diameter = asteroid.diameter_m;
+  speed = asteroid.speed_km_s;
+  angle = asteroid.angle_deg;
+  
+  const diameterSlider = document.getElementById('diameterSlider');
+  const speedSlider = document.getElementById('speedSlider');
+  const angleSlider = document.getElementById('angleSlider');
+  
+  if (diameterSlider) diameterSlider.value = diameter;
+  if (speedSlider) speedSlider.value = speed;
+  if (angleSlider) angleSlider.value = angle;
+  
+  updateSliderValues();
+  
+  console.log('Sliders updated:', { diameter, speed, angle });
+}
+
+// Navegar a slide específico
+function goToSlide(index) {
+  currentSlide = index;
+  selectedAsteroid = asteroidData[index].id;
+  
+  const asteroid = asteroidData[index];
+  updateSlidersWithAsteroidData(asteroid);
+  
+  updateCarousel();
 }

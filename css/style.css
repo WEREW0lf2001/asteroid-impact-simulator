@@ -148,7 +148,7 @@ body {
   display: block;
   max-width: 100% !important;
   max-height: 100% !important;
-  transform: scale(1); /* Forzar escala */
+  transform: scale(1);
 }
 
 .asteroid-info {
@@ -304,7 +304,6 @@ body {
   border: none;
 }
 
-/* Resto de estilos existentes */
 #asteroidSelect {
   display: none;
 }
@@ -356,7 +355,7 @@ button:active {
 }
 
 #results.visible {
-  width: 350px;
+  width: 380px;
   padding: 20px;
   opacity: 1;
 }
@@ -580,6 +579,294 @@ button:active {
   100% { transform: scale(1); }
 }
 
+/* ESTILOS PARA POPUPS Y TOOLTIPS*/
+/* Estilos para popups */
+.impact-popup {
+    min-width: 280px;
+    max-width: 350px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.popup-header {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    padding: 12px 15px;
+    margin: -15px -15px 15px -15px;
+    border-radius: 5px 5px 0 0;
+}
+
+.popup-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.popup-header h4 i {
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+.popup-content {
+    padding: 0 5px;
+}
+
+.popup-section {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.popup-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.popup-section strong {
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+
+.popup-note {
+    background: #f8f9fa;
+    padding: 8px 10px;
+    border-radius: 4px;
+    border-left: 3px solid #3498db;
+    font-size: 12px;
+    color: #7f8c8d;
+}
+
+/* Estilos específicos para cada tipo de popup */
+.thermal-popup .popup-header { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+.blast-popup .popup-header { background: linear-gradient(135deg, #e67e22, #d35400); }
+.crater-popup .popup-header { background: linear-gradient(135deg, #8B4513, #654321); }
+.fireball-popup .popup-header { background: linear-gradient(135deg, #FF4500, #CC3700); }
+.tsunami-popup .popup-header { background: linear-gradient(135deg, #3498db, #2980b9); }
+.seismic-popup .popup-header { background: linear-gradient(135deg, #7f8c8d, #636e72); }
+.seismic-distance-popup .popup-header { background: linear-gradient(135deg, #95a5a6, #7f8c8d); }
+
+/* Tooltips personalizados */
+.custom-tooltip {
+    background: rgba(44, 62, 80, 0.95);
+    border: 1px solid #2c3e50;
+    border-radius: 6px;
+    color: white;
+    padding: 8px 12px;
+    font-size: 13px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    backdrop-filter: blur(2px);
+}
+
+.custom-tooltip::before {
+    border-top-color: #2c3e50;
+}
+
+.tooltip-content {
+    text-align: center;
+    line-height: 1.4;
+}
+
+.tooltip-content strong {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 12px;
+}
+
+/* Mejoras para los controles de capas */
+.layer-controls-integrated {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid var(--border-color);
+}
+
+.layer-control-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.layer-control-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 120px;
+}
+
+.layer-control-item input[type="checkbox"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.layer-control-item label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.layer-control-item label.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.layer-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.layer-controls-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.layer-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.3s;
+    flex: 1;
+    max-width: 120px;
+    margin: 0;
+}
+
+.layer-btn:hover {
+    background: var(--primary-dark);
+    transform: none;
+    box-shadow: none;
+}
+
+/* Leyenda para los efectos */
+.impact-legend {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-width: 250px;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(5px);
+}
+
+.impact-legend h4 {
+    margin: 0 0 10px 0;
+    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.impact-legend h4 i {
+    margin-right: 8px;
+    font-size: 12px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 12px;
+}
+
+.legend-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: 1px solid rgba(0,0,0,0.2);
+}
+
+.legend-label {
+    color: var(--text-light);
+}
+
+/* Controles de capas flotantes */
+.layer-controls {
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid var(--border-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    backdrop-filter: blur(5px);
+}
+
+.layer-controls-panel {
+    padding: 15px;
+    min-width: 200px;
+}
+
+.layer-controls-panel h4 {
+    margin: 0 0 12px 0;
+    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.layer-controls-panel h4 i {
+    margin-right: 8px;
+    font-size: 12px;
+}
+
+.layer-controls-list {
+    margin-bottom: 15px;
+}
+
+/* Efectos sísmicos mejorados */
+.seismic-effect {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 10px 0;
+    padding: 8px;
+    background: rgba(139, 115, 85, 0.05);
+    border-radius: 4px;
+    border-left: 3px solid #8B7355;
+}
+
+.seismic-detail {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 4px;
+    font-style: italic;
+}
+
+.references-list {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.4;
+}
+
+.reference-item {
+    margin-bottom: 4px;
+    padding-left: 10px;
+    border-left: 2px solid var(--border-color);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   #sidebar {
@@ -587,7 +874,12 @@ button:active {
   }
   
   #results.visible {
-    width: 300px;
+    width: 350px;
+  }
+
+  .impact-popup {
+    min-width: 250px;
+    max-width: 300px;
   }
 }
 
@@ -643,4 +935,132 @@ button:active {
     width: 40px;
     height: 40px;
   }
+
+  .impact-legend {
+    bottom: 10px;
+    left: 10px;
+    max-width: 200px;
+    padding: 10px;
+  }
+
+  .layer-controls-integrated {
+    padding: 10px;
+  }
+
+  .layer-control-row {
+    gap: 10px;
+  }
+
+  .layer-control-item {
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  #results.visible {
+    max-width: 100%;
+  }
+
+  .impact-popup {
+    min-width: 220px;
+    max-width: 280px;
+  }
+
+  .popup-header h4 {
+    font-size: 14px;
+  }
+
+  .layer-controls-integrated {
+    padding: 8px;
+  }
+
+  .layer-control-item {
+    min-width: 80px;
+    font-size: 11px;
+  }
+
+  .layer-color {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* Mejoras de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .asteroid-shape,
+  .asteroid-image,
+  .carousel-btn,
+  button,
+  .close-message {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Modo oscuro opcional */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1a1a1a;
+    --card-bg: #2d2d2d;
+    --text-color: #ffffff;
+    --text-light: #b0b0b0;
+    --border-color: #404040;
+  }
+
+  .impact-popup {
+    background: var(--card-bg);
+    color: var(--text-color);
+  }
+
+  .popup-note {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-light);
+  }
+}
+
+/* ESTILOS PARA ANIMACIONES DE EXPANSIÓN PROGRESIVA */
+/* Efectos de transición suaves para círculos */
+.leaflet-interactive {
+    transition: fill-opacity 0.3s ease, stroke-opacity 0.3s ease;
+}
+
+/* Indicador visual durante la animación */
+.circle-expanding {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+}
+
+/* Efecto de pulso para el marcador de impacto */
+.impact-marker {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(36, 47, 49, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(36, 47, 49, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(36, 47, 49, 0);
+    }
+}
+
+/* Clase para elementos en animación */
+.animating {
+    pointer-events: none;
+}
+
+/* Efecto de respiración sutil para círculos animados */
+.breathing-circle {
+    animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 0.9;
+    }
 }

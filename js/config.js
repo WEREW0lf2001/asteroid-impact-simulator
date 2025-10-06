@@ -1,27 +1,28 @@
 let asteroidData = [];
 
-// Función para cargar asteroides desde el backend
 async function loadAsteroidsFromBackend() {
   try {
     console.log('Loading asteroids from backend...');
     
-    // Usar la nueva función específica para asteroides
     const data = await getAsteroids();
     
-    // Verificar la estructura de la respuesta
     if (!data.asteroides) {
       throw new Error('Invalid response format: missing "asteroides" field');
     }
     
-    // Mapear los datos del backend al formato esperado por el frontend
+    // Mapea los datos del backend al formato esperado por el frontend
     asteroidData = data.asteroides.map((asteroid, index) => {
+      const diameter = asteroid.diametro_m || 100;
+      const speedKmH = asteroid.velocidad_km_h || 61200; // Valor por defecto si no hay dato
+      const speedKmS = speedKmH / 3600; // Convertir km/h a km/s
+      
       return {
         id: asteroid.nombre?.replace(/\s+/g, '').toLowerCase() || `asteroid-${index}`,
         name: asteroid.nombre || `Unknown Asteroid ${index + 1}`,
         details: asteroid.peligroso ? "Potentially Hazardous Asteroid" : "Near Earth Object",
         source: "NASA JPL",
-        diameter_m: asteroid.diametro_m || 100,
-        speed_km_s: asteroid.velocidad_km_h ? (asteroid.velocidad_km_h / 3600) : 17,
+        diameter_m: diameter,
+        speed_km_s: Math.round(speedKmS * 10) / 10, // Redondear a 1 decimal
         angle_deg: 45,
         peligroso: asteroid.peligroso || false,
         fecha_aproximacion: asteroid.fecha_aproximacion || null,
@@ -29,23 +30,21 @@ async function loadAsteroidsFromBackend() {
       };
     });
     
-    // Si no hay asteroides, usar datos de ejemplo
     if (asteroidData.length === 0) {
       console.warn('No asteroids received from backend, using fallback data');
       asteroidData = getFallbackAsteroidData();
     }
     
-    console.log(`Loaded ${asteroidData.length} asteroids from backend`);
+    console.log(`✅ Loaded ${asteroidData.length} asteroids from backend`);
+    console.log('📊 First asteroid data:', asteroidData[0]);
     return asteroidData;
   } catch (error) {
     console.error('Error loading asteroids from backend:', error);
-    // Usar datos de respaldo si el backend falla
     asteroidData = getFallbackAsteroidData();
     return asteroidData;
   }
 }
 
-// Datos de respaldo en caso de que el backend falle
 function getFallbackAsteroidData() {
   return [
     {
@@ -59,7 +58,7 @@ function getFallbackAsteroidData() {
       peligroso: false
     },
     {
-      id: "fallback2",
+      id: "fallback2", 
       name: "2024 AB",
       details: "Potentially Hazardous",
       source: "NASA JPL",
