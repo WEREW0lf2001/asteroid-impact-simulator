@@ -1,7 +1,7 @@
 // Configuración de APIs y endpoints
 const API_CONFIG = {
     // URL base del backend
-    BASE_URL: 'http://127.0.0.1:8000',
+    BASE_URL: 'https://asteroid-impact-simulator-backend.up.railway.app',
     
     ENDPOINTS: {
         ASTEROIDS: '/api/asteroides/',
