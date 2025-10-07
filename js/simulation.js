@@ -122,7 +122,7 @@ function displayBackendResults(impactData, targetType) {
     intensidades_regionales
   } = efectos_sismicos || {};
 
-  // Construir el HTML con controles de capas integrados
+  // Construir el HTML con imágenes debajo del título
   document.getElementById("output").innerHTML = `
     <!-- SECCIÓN DE CONTROLES DE CAPAS -->
     <div class="result-section">
@@ -174,7 +174,7 @@ function displayBackendResults(impactData, targetType) {
       </div>
     </div>
 
-    <!-- INFORMACIÓN DEL ASTEROIDE Y ENERGÍA -->
+    <!-- INFORMACIÓN DEL ASTEROIDE - SIN IMAGEN -->
     <div class="result-section">
       <h3><i class="fas fa-info-circle"></i> Impact Parameters</h3>
       <div class="result-item"><span class="result-label">Asteroid Information:</span> <span class="result-value"></span></div>
@@ -185,36 +185,52 @@ function displayBackendResults(impactData, targetType) {
       <div class="result-item"><span class="result-label">Mass:</span> <span class="result-value">${formatNumber(masa_kg)} kg</span></div>
     </div>
     
+    <!-- ENERGÍA DEL IMPACTO - CON IMAGEN -->
     <div class="result-section">
       <h3><i class="fas fa-bolt"></i> Impact Energy</h3>
+      <div class="section-image-below">
+        <img src="./images/impact-energy.png" alt="Impact Energy" class="section-image-medium">
+      </div>
       <div class="result-item"><span class="result-label">Energy:</span> <span class="result-value">${(energia_joules/1e15).toFixed(2)} × 10¹⁵ J</span></div>
       <div class="result-item"><span class="result-label">Equivalent:</span> <span class="result-value">${energia_megatones_TNT.toFixed(2)} megatons TNT</span></div>
       <div class="result-item"><span class="result-label">Hiroshima Bombs:</span> <span class="result-value">${formatNumber(equivalente_bombas_hiroshima)}</span></div>
     </div>
     
-    <!-- EFECTOS DE IMPACTO -->
+    <!-- FORMACIÓN DEL CRÁTER - CON IMAGEN -->
     <div class="result-section">
       <h3><i class="fas fa-mountain"></i> Crater Formation</h3>
+      <div class="section-image-below">
+        <img src="./images/crater.png" alt="Crater Formation" class="section-image-medium">
+      </div>
       <div class="result-item"><span class="result-label">Diameter:</span> <span class="result-value">${formatNumber(crater_diameter_m)}</span></div>
       <div class="result-item"><span class="result-label">Depth:</span> <span class="result-value">${formatNumber(crater_depth_m)}</span></div>
     </div>
     
+    <!-- EFECTOS TÉRMICOS - CON IMAGEN -->
     <div class="result-section">
       <h3><i class="fas fa-fire"></i> Thermal Effects</h3>
+      <div class="section-image-below">
+        <img src="./images/fireball.png" alt="Thermal Effects" class="section-image-medium">
+      </div>
       <div class="result-item"><span class="result-label">Fireball Radius:</span> <span class="result-value">${formatNumber(fireball_radius_m)}</span></div>
       <div class="result-item"><span class="result-label">Lethal Burns:</span> <span class="result-value">${formatNumber(thermal_effects_m.lethal)}</span></div>
       <div class="result-item"><span class="result-label">3rd Degree Burns:</span> <span class="result-value">${formatNumber(thermal_effects_m.burns_3rd)}</span></div>
       <div class="result-item"><span class="result-label">Material Ignition:</span> <span class="result-value">${formatNumber(thermal_effects_m.ignition)}</span></div>
     </div>
     
+    <!-- SOBREPRESIÓN DE EXPLOSIÓN - CON IMAGEN -->
     <div class="result-section">
       <h3><i class="fas fa-wind"></i> Blast Overpressure</h3>
+      <div class="section-image-below">
+        <img src="./images/blast-pressure.png" alt="Blast Overpressure" class="section-image-medium">
+      </div>
       <div class="result-item"><span class="result-label">50 PSI (Total Destruction):</span> <span class="result-value">${formatNumber(blast_overpressure_radii_m['50_psi'])}</span></div>
       <div class="result-item"><span class="result-label">10 PSI (Building Collapse):</span> <span class="result-value">${formatNumber(blast_overpressure_radii_m['10_psi'])}</span></div>
       <div class="result-item"><span class="result-label">5 PSI (Severe Damage):</span> <span class="result-value">${formatNumber(blast_overpressure_radii_m['5_psi'])}</span></div>
       <div class="result-item"><span class="result-label">1 PSI (Window Breakage):</span> <span class="result-value">${formatNumber(blast_overpressure_radii_m['1_psi'])}</span></div>
     </div>
 
+    <!-- EFECTOS DEL VIENTO DE EXPLOSIÓN - SIN IMAGEN -->
     <div class="result-section">
       <h3><i class="fas fa-tornado"></i> Blast Wind Effects</h3>
       <div class="result-item"><span class="result-label">50 PSI Wind Speed:</span> <span class="result-value">${blast_wind_effects['50_psi']?.wind_speed_kmh || 'N/A'} km/h</span></div>
@@ -222,10 +238,13 @@ function displayBackendResults(impactData, targetType) {
       <div class="result-item"><span class="result-label">5 PSI Wind Speed:</span> <span class="result-value">${blast_wind_effects['5_psi']?.wind_speed_kmh || 'N/A'} km/h</span></div>
     </div>
     
-    <!-- EFECTOS SÍSMICOS -->
+    <!-- EFECTOS SÍSMICOS - CON IMAGEN -->
     ${magnitud_momento_Mw ? `
     <div class="result-section">
       <h3><i class="fas fa-earthquake"></i> Seismic Effects</h3>
+      <div class="section-image-below">
+        <img src="./images/seismic.png" alt="Seismic Effects" class="section-image-medium">
+      </div>
       <div class="result-item"><span class="result-label">Seismic Magnitude:</span> <span class="result-value">${magnitud_momento_Mw} Mw</span></div>
       <div class="result-item"><span class="result-label">Maximum Felt Distance:</span> <span class="result-value">${Math.max(...Object.keys(intensidades_regionales || {}).map(k => parseInt(k.replace('_km', ''))).filter(d => !isNaN(d)))} km</span></div>
       ${intensidades_regionales ? Object.entries(intensidades_regionales).map(([distance, data]) => `
@@ -238,7 +257,7 @@ function displayBackendResults(impactData, targetType) {
     </div>
     ` : ''}
     
-    <!-- UBICACIÓN -->
+    <!-- UBICACIÓN - SIN IMAGEN (usa el mismo ícono) -->
     <div class="result-section">
       <h3><i class="fas fa-map-pin"></i> Impact Location</h3>
       <div class="result-item"><span class="result-label">Latitude:</span> <span class="result-value">${ubicacion.lat || 'N/A'}°</span></div>
@@ -246,7 +265,7 @@ function displayBackendResults(impactData, targetType) {
       <div class="result-item"><span class="result-label">Target Type:</span> <span class="result-value">${targetType === 'water' ? 'Water (Ocean/Lake)' : 'Land'}</span></div>
     </div>
     
-    <!-- EFECTOS DE TSUNAMI -->
+    <!-- EFECTOS DE TSUNAMI - SIN IMAGEN -->
     ${efectos_tsunami?.likely ? `
     <div class="result-section">
       <h3><i class="fas fa-water"></i> Tsunami Effects</h3>
@@ -257,7 +276,7 @@ function displayBackendResults(impactData, targetType) {
     </div>
     ` : ''}
     
-    <!-- FACTORES DE ESCALA -->
+    <!-- FACTORES DE ESCALA - SIN IMAGEN -->
     ${factores_escala_aplicados ? `
     <div class="result-section">
       <h3><i class="fas fa-ruler-combined"></i> Scale Factors Applied</h3>
@@ -268,7 +287,7 @@ function displayBackendResults(impactData, targetType) {
     </div>
     ` : ''}
     
-    <!-- REFERENCIAS CIENTÍFICAS -->
+    <!-- REFERENCIAS CIENTÍFICAS - SIN IMAGEN -->
     ${referencias_cientificas ? `
     <div class="result-section">
       <h3><i class="fas fa-graduation-cap"></i> Scientific References</h3>

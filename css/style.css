@@ -1064,3 +1064,180 @@ button:active {
         opacity: 0.9;
     }
 }
+
+
+/* CONTROLES DE ACCESIBILIDAD */
+.accessibility-controls {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.accessibility-btn {
+    background: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    color: white;
+    padding: 12px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin: 0;
+}
+
+.accessibility-btn:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.accessibility-btn.active {
+    background: #e74c3c;
+    border-color: #e74c3c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(231, 76, 60, 0.4);
+}
+
+.accessibility-btn.active:hover {
+    background: #c0392b;
+    border-color: #c0392b;
+}
+
+.accessibility-btn i {
+    font-size: 16px;
+}
+
+/* EFECTOS VISUALES EN MODO DALTONISMO */
+.colorblind-mode {
+    /* El filtro se aplica via JavaScript */
+}
+
+.colorblind-mode .logo h1 {
+    color: #2c3e50 !important;
+}
+
+.colorblind-mode .input-group label {
+    color: #34495e !important;
+    font-weight: 600;
+}
+
+/* Mejorar visibilidad de capas en modo daltónico */
+.colorblind-mode .leaflet-interactive {
+    stroke-width: 2px !important;
+}
+
+/* Leyenda mejorada para modo daltónico */
+.colorblind-legend {
+    background: rgba(44, 62, 80, 0.95) !important;
+    border: 2px solid #e74c3c !important;
+}
+
+/* Estados del botón más claros */
+#colorblindStatus {
+    font-weight: 700;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 4px;
+}
+
+.accessibility-btn.active #colorblindStatus {
+    background: rgba(255,255,255,0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .accessibility-btn {
+        font-size: 13px;
+        padding: 10px 12px;
+    }
+}
+
+
+
+
+/* ESTILOS PARA IMÁGENES DEBAJO DEL TÍTULO - VERSIÓN MÍNIMA */
+.section-image-below {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0 20px 0;
+    padding: 0;
+}
+
+.section-image-medium {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 0;
+    padding: 0;
+    background: transparent;
+    transition: none;
+}
+
+/* Quitar cualquier efecto hover */
+.section-image-medium:hover {
+    transform: none;
+}
+
+/* Quitar cualquier estilo específico por sección */
+.result-section:nth-child(4) .section-image-below,
+.result-section:nth-child(5) .section-image-below,
+.result-section:nth-child(6) .section-image-below,
+.result-section:nth-child(7) .section-image-below,
+.result-section:nth-child(9) .section-image-below {
+    background: transparent;
+    border: none;
+}
+
+/* Ajustes para secciones SIN imagen */
+.result-section:not(:has(.section-image-below)) {
+    padding-top: 15px;
+}
+
+/* Mejorar espaciado entre secciones */
+.result-section {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Responsive para imágenes */
+@media (max-width: 768px) {
+    .section-image-below {
+        margin: 12px 0 16px 0;
+    }
+    
+    .section-image-medium {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-image-below {
+        margin: 10px 0 14px 0;
+    }
+    
+    .section-image-medium {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Quitar animaciones */
+.section-image-medium {
+    animation: none;
+}
+
+/* Modo daltónico - sin efectos adicionales */
+.colorblind-mode .section-image-medium {
+    filter: none;
+    border: none;
+}
